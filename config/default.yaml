@@ -1,0 +1,29 @@
+# paper = simulated orders against real or recorded prices. live is not implemented yet.
+mode: paper
+
+symbol: BTCUSDT
+timeframe: 1h
+initial_cash: 10000
+history_bars: 1000      # candles loaded for each decision
+poll_seconds: 60        # how often the bot checks for a new candle
+state_file: state/paper.json
+
+# conservative | balanced | aggressive: how the advisor weighs drawdown against return
+risk_profile: balanced
+
+strategy:
+  name: sma_cross       # sma_cross | rsi_reversion | ml
+  params:
+    fast: 20
+    slow: 50
+
+risk:
+  risk_per_trade: 0.01          # share of equity lost if the stop is hit
+  stop_loss_pct: 0.03
+  take_profit_pct: 0.06         # null disables the take-profit exit
+  max_position_fraction: 0.5    # largest share of equity in one position
+  max_drawdown_pct: 0.2         # trading halts when equity falls this far from its peak
+
+fees:
+  fee_rate: 0.001
+  slippage_bps: 5
